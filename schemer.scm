@@ -1,5 +1,3 @@
-#lang scheme
-
 (define atom?
   (lambda (x)
     (and (not (pair? x)) (not (null? x)))))
@@ -91,7 +89,7 @@
                   (car lat)
                   (subst new old (cdr lat)))))))))
 
-(subst 'maa 'stink lp)
+(display (subst 'maa 'stink lp))
 
 ; Page 52
 (define subst2

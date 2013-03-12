@@ -1,5 +1,3 @@
-#lang scheme
-
 (define atom?
   (lambda (x)
     (and (not (pair? x)) (not (null? x)))))
@@ -232,7 +230,7 @@
 			((one? n) (cdr lat))
 			(else (cons (car lat) (rempick2 (sub1 n) (cdr lat)))))))
 
-(rempick2 2 '('one 'two 'three 'four))
+(display (rempick2 2 '('one 'two 'three 'four)))
 
 
 ;; 5. Oh my gawd it's full of stars*
@@ -243,5 +241,13 @@
 	(lambda (a l)
 		(cond
 			((null? l) '())
-			)))
+			((atom? (car l))
+				(cond
+					((eq? (car l) a) (rember* a (cdr l)))
+					(else
+						(cons (car l) (rember* a (cdr l))))))
+			(else
+				(cons (rember* a (car l)) (rember* a (cdr l)))))))
+
+(display (rember* 1 '('1 2 3 4 5)))
 
