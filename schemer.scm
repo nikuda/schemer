@@ -1,4 +1,4 @@
-#lang racket
+#lang scheme
 
 (define atom?
   (lambda (x)
@@ -35,7 +35,7 @@
     (cond
       ((null? lat) (quote ()))
       ((eq? (car lat) a) (cdr lat))
-      (else (cons (car lat) (rember a 
+      (else (cons (car lat) (rember a
               (cdr lat)))))))
 
 (rember 'two l)
@@ -59,14 +59,14 @@
     (cond
       ((null? lat) (quote ()))
       (else
-        (cond 
+        (cond
           ((eq? (car lat) old) (cons old (cons new (cdr lat))))
           (else (cons (car lat) (insertR new old (cdr lat)))))))))
 
 (define lp
   (list 'are 'you 'a 'stink 'face))
 
-(insertR 'fark 'stink lp)
+(insertR 'jazz 'stink lp)
 
 ; Page 51
 (define insertL
@@ -82,13 +82,13 @@
 
 (define subst
   (lambda (new old lat)
-    (cond 
+    (cond
       ((null? lat) (quote ()))
       (else (cond
           ((eq? (car lat) old)
             (cons new (cdr lat)))
-          (else (cons 
-                  (car lat) 
+          (else (cons
+                  (car lat)
                   (subst new old (cdr lat)))))))))
 
 (subst 'maa 'stink lp)
@@ -96,15 +96,15 @@
 ; Page 52
 (define subst2
   (lambda (new old1 old2 lat)
-    (cond 
+    (cond
       ((null? lat) (quote ()))
       (else (cond
           ((eq? (car lat) old1)
             (cons new (cdr lat)))
           ((eq? (car lat) old2)
             (cons new (cdr lat)))
-          (else (cons 
-                  (car lat) 
+          (else (cons
+                  (car lat)
                   (subst2 new old1 old2 (cdr lat)))))))))
 
 (subst2 'maaaa 'face 'stink lp)
@@ -234,7 +234,7 @@
     (cond
       ((null? tup1) tup2)
       ((null? tup2) tup1)
-      (else 
+      (else
         (cons (o+ (car tup1) (car tup2))
           (tup+ (cdr tup1) (cdr tup2)))))))
 
