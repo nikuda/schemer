@@ -1,3 +1,7 @@
+#lang scheme
+
+(provide (all-defined-out))
+
 (define atom?
   (lambda (x)
     (and (not (pair? x)) (not (null? x)))))
@@ -7,6 +11,8 @@
 (define l
   (list 'atomk 'one 'two 'three))
 
+(display "-------")
+(newline)
 (car l)
 (cdr l)
 (car (cdr (cdr l)))
