@@ -2,23 +2,13 @@
 
 (provide (all-defined-out))
 
+; atom? is not defined in most schemes because why?
 (define atom?
   (lambda (x)
     (and (not (pair? x)) (not (null? x)))))
 
-(atom? (quote ()))
-
 (define l
-  (list 'atomk 'one 'two 'three))
-
-(display "-------")
-(newline)
-(car l)
-(cdr l)
-(car (cdr (cdr l)))
-
-(cons 'first l)
-(cons 'morefirst l)
+	(list 'one1 'two1 'three1))
 
 (define lat?
   (lambda (l)
