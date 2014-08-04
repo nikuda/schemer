@@ -7,9 +7,7 @@
   (lambda (x)
     (and (not (pair? x)) (not (null? x)))))
 
-(define l
-	(list 'one1 'two1 'three1))
-
+; is every sexp in list an atom?
 (define lat?
   (lambda (l)
     (cond
@@ -17,6 +15,7 @@
       ((atom? (car l)) (lat? (cdr l)))
       (else #f))))
 
+; is atom in list?
 (define member?
   (lambda (a lat)
     (cond
@@ -24,6 +23,7 @@
       (else (or (eq? (car lat) a)
                 (member? a (cdr lat)))))))
 
+; remove a list member
 (define rember
   (lambda (a lat)
     (cond
@@ -32,20 +32,12 @@
       (else (cons (car lat) (rember a
               (cdr lat)))))))
 
-(rember 'two l)
-
-(define ll
-  (list (list 'art 'bar) (list 'mar 'tar)))
-
-; Page 45
+; Page 43
 (define firsts
   (lambda (l)
     (cond
       ((null? l) (quote ()))
       (else (cons (car (car l)) (firsts (cdr l)) )) )))
-
-(display ll)
-(firsts ll)
 
 ; Page 48
 (define insertR
@@ -57,11 +49,6 @@
           ((eq? (car lat) old) (cons old (cons new (cdr lat))))
           (else (cons (car lat) (insertR new old (cdr lat)))))))))
 
-(define lp
-  (list 'are 'you 'a 'stink 'face))
-
-(insertR 'jazz 'stink lp)
-
 ; Page 51
 (define insertL
   (lambda (new old lat)
@@ -71,8 +58,6 @@
         (cond
           ((eq? (car lat) old) (cons new (cons old (cdr lat))))
           (else (cons (car lat) (insertL new old (cdr lat)))))))))
-
-(insertL 'test 'stink lp)
 
 (define subst
   (lambda (new old lat)
@@ -84,8 +69,6 @@
           (else (cons
                   (car lat)
                   (subst new old (cdr lat)))))))))
-
-(display (subst 'maa 'stink lp))
 
 ; Page 52
 (define subst2
@@ -101,8 +84,6 @@
                   (car lat)
                   (subst2 new old1 old2 (cdr lat)))))))))
 
-(subst2 'maaaa 'face 'stink lp)
-
 ; not finished
 (define multirember
   (lambda (a lat)
@@ -110,45 +91,29 @@
     (else (cond ((eq? (car lat) a) (multirember a (cdr lat)))
           (else (cons (car lat) (multirember a (cdr lat)))))))))
 
-; pass a list directly into function ??
-(define multilist
-  (list 'maa 'faa 'rra 'maa 'daa 'taa 'taa 'tre 'maa 'aaa))
-
-(multirember 'taa multilist)
-
-
 ; page 56
 (define multiinsertR
   (lambda (new old lat)
     (cond ((null? lat) (quote ()))
     (else (cond ((eq? (car lat) old)
-                      (cons new (cons old (multiinsertR new old (cdr lat)))))
+                      (cons old (cons new (multiinsertR new old (cdr lat)))))
           (else (cons (car lat)
                       (multiinsertR new old (cdr lat)))))))))
-
-(multiinsertR 'yes 'maa multilist)
-
 
 (define multiinsertL
   (lambda (new old lat)
     (cond ((null? lat) (quote ()))
-    (else (cond ((eq? (car lat) old) (cons new (cons old (multiinsertL new old (cdr lat)))))
-          (else (cons (car lat) (multiinsertL new old (cdr lat)))))))))
-
-(define abcd
-  (list 'chips 'and 'fish 'or 'fish 'and 'fried))
-
-(multiinsertL 'fried 'fish abcd)
+    (else (cond ((eq? (car lat) old)
+                      (cons new (cons old (multiinsertL new old (cdr lat)))))
+          (else (cons (car lat)
+                      (multiinsertL new old (cdr lat)))))))))
 
 ; page 57
-
 (define multisubst
   (lambda (new old lat)
     (cond ((null? lat) (quote ()))
     (else (cond ((eq? (car lat) old) (cons new (multisubst new old (cdr lat))))
           (else (cons (car lat) (multisubst new old (cdr lat)))))))))
-
-(multisubst 'crabs 'fish abcd)
 
 
 ;; NUMBERS
