@@ -125,3 +125,31 @@
 ;;      = 1 + 1 + 1 (/ 3 4)
 ;;      = 1 + 1 + 1 + 0
 
+(title "The First Commandment")
+(body "When recurring on a list of atoms, lat, ask two questions")
+(body "about it: (null? lat) and else.")
+(body "When recurring on a number, n, ask two questions about")
+(body "it: (zero? n) and else.")
+
+(numbered? '(2 o+ 2))
+
+(title "The Seventh Commandment")
+(body "Recur on the subparts that are of the same nature")
+(body "- On the sublists of a list.")
+(body "- On the subexpressions of an artihmetic expressions.")
+
+(1st-sub-exp '('one 'two 'three))
+(2nd-sub-exp '('one 'two 'three))
+
+(value '(o+ 4 4))
+(value '(o* 4 4))
+(value '(o** 4 4))
+
+(title "The Eighth Commandment")
+(body "Use help functions to abstract from representations.")
+
+(set? xs-five)
+(set? food)
+
+(makeset food)
+(set? (makeset food))

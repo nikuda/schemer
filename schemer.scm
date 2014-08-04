@@ -452,3 +452,55 @@
       (else (cons (car l) (remberr s (cdr l)))))))
 
 (remberr 'test '(this is a big test))
+
+; page 99
+
+(define numbered?
+  (lambda (aexp)
+    (cond
+      ((atom? aexp) (number? aexp))
+      (else
+        (and (numbered? (car aexp))
+              (numbered? (car (cdr (cdr aexp)))))))))
+
+(define operator
+  (lambda (aexp)
+    (car aexp)))
+
+(define 1st-sub-exp
+  (lambda (aexp)
+    (car (cdr aexp))))
+
+(define 2nd-sub-exp
+  (lambda (aexp)
+    (car (cdr (cdr aexp)))))
+
+(define value
+  (lambda (nexp)
+    (cond
+      ((atom? nexp) nexp)
+      ((eq? (operator nexp) 'o+)
+        (o+ (value (1st-sub-exp nexp))
+            (value (2nd-sub-exp nexp))))
+      ((eq? (operator nexp) 'o*)
+        (o* (value (1st-sub-exp nexp))
+            (value (2nd-sub-exp nexp))))
+      (else
+        (o* (value (1st-sub-exp nexp))
+            (value (2nd-sub-exp nexp)))))))
+
+; page 111
+
+(define set?
+  (lambda (lat)
+    (cond
+      ((null? lat) #t)
+      ((member? (car lat) (cdr lat)) #f)
+      (else (set? (cdr lat))))))
+
+(define makeset
+  (lambda (lat)
+    (cond
+      ((null? lat) '())
+      ((member? (car lat) (cdr lat)) (makeset (cdr lat)))
+      (else (cons (car lat) (makeset (cdr lat)))))))
