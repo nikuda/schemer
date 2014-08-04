@@ -123,18 +123,9 @@
   (lambda (n)
     (+ n 1)))
 
-(add1 67)
-
 (define sub1
   (lambda (n)
     (- n 1)))
-
-(sub1 5)
-(sub1 0)
-
-(zero? 0)
-(zero? 1492)
-
 
 (define o+
   (lambda (n m)
@@ -144,21 +135,14 @@
         ;;(print n)
         (add1 (o+ n (sub1 m)))))))
 
-(o+ 4 4)
-
 (define o-
   (lambda (n m)
     (cond
       ((zero? m) n)
       (else (sub1 (o- n (sub1 m)))))))
 
-(o- 17 7)
 
 ;; Tuples
-
-;;(tup? (1 32 312))
-
-
 ;; page 64
 
 (define addtup
@@ -167,24 +151,12 @@
       ((null? tup) 0)
       (else (o+ (car tup) (addtup (cdr tup)))))))
 
-(addtup '(12 12 12))
-
-
 (define o*
   (lambda (n m)
     (cond
       ((zero? m) 0)
       (else
         (o+ n (o* n (sub1 m)))))))
-
-(o* 5 5)
-
-;; (x 5 5)  = 5 + (x 5 4)
-;;      = 5 + 5 + (x 5 3)
-;;      = 5 + 5 + 5 + (x 5 2)
-;;      = 5 + 5 + 5 + 5 + (x 5 1)
-;;      = 5 + 5 + 5 + 5 + 5 + (x 5 0)
-;;      = 5 + 5 + 5 + 5 + 5 + 0
 
 ;; page 69
 
@@ -197,11 +169,8 @@
         (cons (o+ (car tup1) (car tup2))
           (tup+ (cdr tup1) (cdr tup2)))))))
 
-(tup+ '(2 2) '(4 4 4))
 
 ;; page 71
-
-(> 12 133)
 
 (define o>
   (lambda (n m)
@@ -211,7 +180,6 @@
       (else
         (o> (sub1 n) (sub1 m))))))
 
-(o> 134 133)
 
 (define o<
   (lambda (n m)
@@ -220,9 +188,6 @@
       ((zero? n) #t)
       (else
         (o< (sub1 n) (sub1 m))))))
-
-(o< 6 5)
-
 
 ;; page 74
 
@@ -233,8 +198,6 @@
       ((zero? n) #f)
       (else (o=? (sub1 n) (sub1 m))))))
 
-(o=? 4 4)
-
 (define o=
   (lambda (n m)
     (cond
@@ -242,29 +205,17 @@
       ((o< n m) #f)
       (else #t))))
 
-(o= 4 4)
-
 (define o**
   (lambda (n m)
     (cond
       ((zero? m) 1)
       (else (o* n (o** n (sub1 m)))))))
 
-(o** 5 3)
-
-
 (define o/
   (lambda (n m)
     (cond
       ((o< n m) 0)
       (else (add1 (o/ (o- n m) m))))))
-
-;; (/ 15 4) = 1 + (/ 11 4)
-;;      = 1 + 1 + (/ 7 4)
-;;      = 1 + 1 + 1 (/ 3 4)
-;;      = 1 + 1 + 1 + 0
-
-(o/ 15 4)
 
 ;; page 76
 
@@ -449,6 +400,10 @@
 
 (leftmost '(((maybe) try this for a change (today) please)))
 
+; or   -   asks questions one at a time until it finds one that is true
+;          returns bool
+
+; page 91
 
 (define eqlist?
   (lambda (l1 l2)
