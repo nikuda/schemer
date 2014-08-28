@@ -144,6 +144,17 @@
 (one? 1)
 (rempick2 2 '(one two three four))
 
+(rember* 2 '(2 3 (4 5) 6 8 9 (2 1 2 (2 3 3))))
+(insertR* 'sir 'yes '(oh yes (oh yes (oh yes) oh yes)))
+(occur* 2 '(2 2 2 (2 3 4 (43 2))))
+(subst* 'yesterday 'today '(today was a nice day (yes today)))
+(insertL* 'before 'today '(today was a nice day (yes today)))
+(member* 'yes '(today was a nice day (yes today)))
+(leftmost '(((maybe) try this for a change (today) please)))
+
+(eqlist? '(a b (aa)) '(a b (aa)))
+
+
 (title "The First Commandment (final version)")
 (body "When recurring on a list of atoms, lat, ask two questions")
 (body "about it: (null? lat) and else.")

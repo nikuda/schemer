@@ -296,6 +296,7 @@
 ;; S-expressions deep traversal?
 ;; page 81
 
+; rember-star removes nested members
 (define rember*
   (lambda (a l)
     (cond
@@ -305,9 +306,6 @@
           ((eq? a (car l)) (rember* a (cdr l)))
           (else (cons (car l) (rember* a (cdr l))))))
       (else (cons (rember* a (car l)) (rember* a (cdr l)))))))
-
-
-(rember* 2 '(2 3 (4 5) 6 8 9 (2 1 2 (2 3 3))))
 
 (define insertR*
   (lambda (new old l)
@@ -322,9 +320,6 @@
       (else
         (cons (insertR* new old (car l)) (insertR* new old (cdr l)))))))
 
-(insertR* 'sir 'yes '(oh yes (oh yes (oh yes) oh yes)))
-
-
 (define occur*
   (lambda (a l)
     (cond
@@ -337,9 +332,6 @@
             (occur* a (cdr l)))))
       (else
         (o+ (occur* a (car l)) (occur* a (cdr l)))))))
-
-(occur* 2 '(2 2 2 (2 3 4 (43 2))))
-
 
 (define subst*
   (lambda (new old l)
@@ -354,9 +346,6 @@
       (else
         (cons (subst* new old (car l)) (subst* new old (cdr l)))))))
 
-(subst* 'yesterday 'today '(today was a nice day (yes today)))
-
-
 (define insertL*
   (lambda (new old l)
     (cond
@@ -370,8 +359,6 @@
       (else
         (cons (insertL* new old (car l)) (insertL* new old (cdr l)))))))
 
-(insertL* 'before 'today '(today was a nice day (yes today)))
-
 (define member*
   (lambda (a l)
     (cond
@@ -383,16 +370,11 @@
       (else
         (or (member* a (car l)) (member* a (cdr l)))))))
 
-(member* 'yes '(today was a nice day (yes today)))
-
-
 (define leftmost
   (lambda (l)
     (cond
       ((atom? (car l)) (car l))
       (else (leftmost (car l))))))
-
-(leftmost '(((maybe) try this for a change (today) please)))
 
 ; or   -   asks questions one at a time until it finds one that is true
 ;          returns bool
@@ -411,9 +393,6 @@
       (else
         (and (eqlist? (car l1) (car l2)) (eqlist? (cdr l1) (cdr l2)))))))
 
-(eqlist? '(a b (aa)) '(a b (aa)))
-
-
 (define equal?
   (lambda (s1 s2)
     (cond
@@ -421,8 +400,6 @@
         (eqan? s1 s2))
       ((or (atom? s1) (atom? s2)) #f)
       (else (eqlist? s1 s2)))))
-
-(equal? '(a) '(ab))
 
 ; eqlist? rewrite using equal?
 (define eqlist?r
@@ -434,18 +411,13 @@
         (and (equal? (car l1) (car l2))
           (eqlist?r (cdr l1) (cdr l2)))))))
 
-(eqlist?r '(a b (aa)) '(a b (aa)))
-
 ; rember rewrite using equal?
-
 (define remberr
   (lambda (s l)
     (cond
       ((null? l) '())
       ((equal? (car l) s) (cdr l))
       (else (cons (car l) (remberr s (cdr l)))))))
-
-(remberr 'test '(this is a big test))
 
 ; page 99
 
