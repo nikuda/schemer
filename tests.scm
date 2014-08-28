@@ -17,7 +17,7 @@
 ; sample data
 (define xs-null '())
 (define xs-five (list 'one 'two 'three 'four 'five))
-
+(define xs-five-mix (list 'one 1 'two 2 3 4 'three 'four 5 'five))
 (define xs-five-nested (list
 	(list 'one 'one-point-five) (list 'two) (list 'three) (list 'four) (list 'five)))
 
@@ -77,7 +77,8 @@
 (insertR 'three-point-five 'three xs-five)
 (insertL 'two-point-five 'three xs-five)
 (subst 'three 'better-three xs-five)
-(subst2 'four 'three 'five xs-five)
+(subst2 'six 'five 'four xs-five)
+(multirember 'four (insertL 'four 'four xs-five))
 (multiinsertR 'tomato 'fish food)
 (multiinsertL 'fried 'fish food)
 
@@ -125,7 +126,25 @@
 ;;      = 1 + 1 + 1 (/ 3 4)
 ;;      = 1 + 1 + 1 + 0
 
-(title "The First Commandment")
+(length xs-five)
+
+(pick 1 '(1 2 3 4 5 6))
+(pick 1 xs-five)
+(rempick 2 '(1 2 3))
+(rempick 2 xs-five)
+
+(no-nums xs-five-mix)
+(all-nums xs-five-mix)
+
+(eqan? 2 2)
+(eqan? 2 'two)
+(eqan? 'two 'two)
+
+(occur 2 '(1 2 3 4 5 2 2))
+(one? 1)
+(rempick2 2 '(one two three four))
+
+(title "The First Commandment (final version)")
 (body "When recurring on a list of atoms, lat, ask two questions")
 (body "about it: (null? lat) and else.")
 (body "When recurring on a number, n, ask two questions about")

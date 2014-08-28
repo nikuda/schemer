@@ -32,6 +32,7 @@
       (else (cons (car lat) (rember a
               (cdr lat)))))))
 
+; find first s-exp in each interal list
 ; Page 43
 (define firsts
   (lambda (l)
@@ -70,21 +71,23 @@
                   (car lat)
                   (subst new old (cdr lat)))))))))
 
+; sub which comes first old1, or old2
 ; Page 52
 (define subst2
   (lambda (new old1 old2 lat)
     (cond
       ((null? lat) (quote ()))
       (else (cond
-          ((eq? (car lat) old1)
-            (cons new (cdr lat)))
-          ((eq? (car lat) old2)
-            (cons new (cdr lat)))
+          ; ((eq? (car lat) old1)
+          ;   (cons new (cdr lat)))
+          ; ((eq? (car lat) old2)
+          ;   (cons new (cdr lat)))
+          ((or (eq? (car lat) old1) (eq? (car lat) old2))
+              (cons new (cdr lat)))
           (else (cons
                   (car lat)
                   (subst2 new old1 old2 (cdr lat)))))))))
 
-; not finished
 (define multirember
   (lambda (a lat)
     (cond ((null? lat) (quote ()))
@@ -225,26 +228,23 @@
       ((null? tup) 0)
       (else (add1 (length (cdr tup)))))))
 
-(length '('ome 'twp 'tr 'four 23))
-
+; index
 (define pick
   (lambda (n lat)
     (cond
       ((zero? (sub1 n)) (car lat))
       (else (pick (sub1 n) (cdr lat))))))
 
-(pick 1 '(0 1 2 3 4 5 6))
-
 ;; page 77
 
+; remove by index
 (define rempick
   (lambda (n lat)
     (cond
       ((zero? (sub1 n)) (cdr lat))
       (else (cons (car lat) (rempick (sub1 n) (cdr lat)))))))
 
-(rempick 1 '(0 1 2 3))
-
+; remove numbers from list
 (define no-nums
   (lambda (lat)
     (cond
@@ -253,8 +253,7 @@
           ((number? (car lat)) (no-nums (cdr lat)))
           (else (cons (car lat) (no-nums (cdr lat)))))))))
 
-(no-nums '('atom 1 'thing 2 4 5 'best 'of))
-
+; remove non-numbers from list
 (define all-nums
   (lambda (lat)
     (cond
@@ -263,14 +262,14 @@
           ((number? (car lat)) (cons (car lat) (all-nums (cdr lat))))
           (else (all-nums (cdr lat))))))))
 
-(all-nums '('atom 1 'thing 2 4 5 'best 'of))
-
+; is same atom?
 (define eqan?
   (lambda (a1 a2)
     (cond
       ((and (number? a1) (number? a2))
         (o= a1 a2))
-      ((or (number? a1) (number? a2)))
+      ((or (number? a1) (number? a2))
+        #f)
       (else (eq? a1 a2)))))
 
 (define occur
@@ -281,21 +280,16 @@
         ((eqan? a (car lat)) (add1 (occur a (cdr lat))))
         (else (occur a (cdr lat))))))))
 
-(occur 2 '(1 2 3 4 5 2 2))
-
 (define one?
   (lambda (n)
     (o= n 1)))
 
-(one? 1)
-
+; same as rempick but using one?
 (define rempick2
   (lambda (n lat)
     (cond
       ((one? n) (cdr lat))
       (else (cons (car lat) (rempick2 (sub1 n) (cdr lat)))))))
-
-(rempick2 2 '(one two three four))
 
 
 ;; 5. Oh my gawd it's full of stars*
