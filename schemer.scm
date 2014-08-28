@@ -464,9 +464,29 @@
       ((member? (car lat) (cdr lat)) #f)
       (else (set? (cdr lat))))))
 
-(define makeset
+(define makeset-old
   (lambda (lat)
     (cond
       ((null? lat) '())
       ((member? (car lat) (cdr lat)) (makeset (cdr lat)))
       (else (cons (car lat) (makeset (cdr lat)))))))
+
+; makeset using multirember
+; preserves list order
+(define makeset
+  (lambda (lat)
+    (cond
+      ((null? lat) '())
+      (else
+        (cons (car lat) (makeset (multirember (car lat) (cdr lat))))))))
+
+(define subset?
+  (lambda (subset set)
+    (cond
+      ((null? subset) #t)
+      (else (and
+        (member? (car subset) set)
+        (subset? (cdr subset) set))))))
+
+
+

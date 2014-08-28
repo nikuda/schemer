@@ -22,7 +22,7 @@
 	(list 'one 'one-point-five) (list 'two) (list 'three) (list 'four) (list 'five)))
 
 (define food
-  (list 'chips 'and 'fish 'or 'fish 'and 'fried))
+  (list 'chips 'fish 'cream 'fish 'potato 'hummus 'leek 'chips))
 
 ; atom?
 (assert "is atom?" (atom? 'test-atom))
@@ -153,6 +153,10 @@
 (leftmost '(((maybe) try this for a change (today) please)))
 
 (eqlist? '(a b (aa)) '(a b (aa)))
+(equal? '(a) '(ab))
+
+(eqlist?r '(a b (aa)) '(a b (aa)))
+(remberr 'test '(this is a big test))
 
 
 (title "The First Commandment (final version)")
@@ -180,6 +184,12 @@
 
 (set? xs-five)
 (set? food)
+(set? xs-five-mix)
+
+(makeset-old food)
+(set? (makeset food))
 
 (makeset food)
-(set? (makeset food))
+(subset? '(chips fish) (makeset food))
+
+
