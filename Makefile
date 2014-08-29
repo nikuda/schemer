@@ -1,2 +1,2 @@
 test:
-	@racket tests.scm | less
+	@racket tests.scm | less +G
