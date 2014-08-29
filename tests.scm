@@ -191,5 +191,10 @@
 
 (makeset food)
 (subset? '(chips fish) (makeset food))
-
-
+(eqset? (makeset food) (makeset food))
+(intersect? (makeset food) food)
+(intersect (makeset food) food)
+(intersect '(seven eight one five) (makeset xs-five))
+(union '(seven eight one five) xs-five)
+(xxx '(seven eight one five) xs-five)
+(intersect-all '((one two) (seven one three)))
