@@ -236,5 +236,10 @@
 (insertLrr 'smementy 'one xs-five)
 (subst_r 'smementy 'one xs-five)
 
-(title "The Minth Commandment")
+(title "The Ninth Commandment")
 (body "Abstract common patterns with a new function")
+
+((atom-to-function 'o*) 2 2)
+(value_r '(o+ 4 4))
+(value_r '(o* 4 4))
+(value_r '(o** 4 4))

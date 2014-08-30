@@ -606,3 +606,17 @@
 (define seqS (lambda (new old l) (cons new l)))
 
 (define subst_r (insert-g seqS))
+
+(define atom-to-function (lambda (x)
+  (cond
+    ((eq? x 'o+) o+)
+    ((eq? x 'o*) o*)
+    (else o**))))
+
+(define value_r
+  (lambda (nexp)
+    (cond
+      ((atom? nexp) nexp)
+      (else
+        ((atom-to-function (operator nexp)) (value (1st-sub-exp nexp))
+            (value (2nd-sub-exp nexp)))))))
