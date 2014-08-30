@@ -557,3 +557,44 @@
 
 (define fullfun? (lambda (rel) (set? (seconds rel))))
 (define one-to-one? (lambda (rel) (fun? (revrel rel))))
+
+; Lambda the Ultimate
+
+;(define rember-f (lambda (test? a l)
+;  (cond
+;    ((null? l) '())
+;    ((test? (car l) a) (cdr l))
+;    (else (cons (car l) (rember-f test? a (cdr l)))))))
+
+(define rember-f (lambda (test?) (lambda (a l)
+  (cond
+    ((null? l) '())
+    ((test? (car l) a) (cdr l))
+    (else (cons (car l) ((rember-f test?) a (cdr l))))))))
+
+(define insertL-f (lambda (test?) (lambda (new old l)
+  (cond
+    ((null? l) '())
+    ((test? (car l) old) (cons new (cons old (cdr l))))
+    (else (cons (car l) ((insertL-f test?) new old (cdr l))))))))
+
+(define insertR-f (lambda (test?) (lambda (new old l)
+  (cond
+    ((null? l) '())
+    ((test? (car l) old) (cons old (cons new (cdr l))))
+    (else (cons (car l) ((insertR-f test?) new old (cdr l))))))))
+
+(define seqL (lambda (new old l)
+  (cons new (cons old l))))
+
+(define seqR (lambda (new old l)
+  (cons old (cons new l))))
+
+(define insert-g (lambda (test? seq) (lambda (new old l)
+  (cond
+    ((null? l) '())
+    ((test? (car l) old) (seq new old (cdr l)))
+    (else (cons (car l) ((insert-g seq) new old l)))))))
+
+(define insertLr (insert-g eq? seqL))
+(define insertRr (insert-g eq? seqR))

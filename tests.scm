@@ -225,3 +225,10 @@
 
 (firsts tup-two)
 (seconds tup-two)
+
+((rember-f eq?) 'one xs-five)
+((insertL-f eq?) 'eleventy 'one xs-five)
+((insertR-f eq?) 'eleventy 'one xs-five)
+
+(insertLr 'eleventy 'one xs-five)
+(insertRr 'eleventy 'one xs-five)
