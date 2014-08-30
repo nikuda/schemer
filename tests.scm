@@ -4,11 +4,11 @@
 
 ; micro unit testing -____-
 (define (assert msg test)
-	(if (not test) (error msg) (displayln (string-append "ok: " msg))))
+  (if (not test) (error msg) (displayln (string-append "ok: " msg))))
 
 ; print helpers
 (define (msg before message after) (displayln
-	(string-append before message after)))
+  (string-append before message after)))
 
 (define (block b) (msg "-- " b " --"))
 (define (title t) (displayln "") (msg "** " t " **"))
@@ -18,11 +18,19 @@
 (define xs-null '())
 (define xs-five (list 'one 'two 'three 'four 'five))
 (define xs-five-mix (list 'one 1 'two 2 3 4 'three 'four 5 'five))
-(define xs-five-nested (list
-	(list 'one 'one-point-five) (list 'two) (list 'three) (list 'four) (list 'five)))
+(define xs-five-nested
+  (list
+    (list 'one 'one-point-five)
+    (list 'two)
+    (list 'three)
+    (list 'four)
+    (list 'five)))
 
 (define food
   (list 'chips 'fish 'cream 'fish 'potato 'hummus 'leek 'chips))
+
+(define tup-one (list 1 2))
+(define tup-two (list (list 1 2) (list 3 4)))
 
 ; atom?
 (assert "is atom?" (atom? 'test-atom))
@@ -198,3 +206,15 @@
 (union '(seven eight one five) xs-five)
 (xxx '(seven eight one five) xs-five)
 (intersect-all '((one two) (seven one three)))
+
+(a-pair? tup-one)
+(a-pair? '(1 2 3))
+(a-pair? tup-two)
+
+(first tup-two)
+(second tup-two)
+
+(build xs-five food)
+(fun? tup-two)
+
+(revrel tup-two)
