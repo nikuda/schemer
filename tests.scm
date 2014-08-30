@@ -78,6 +78,7 @@
 (title "The Second Commandment")
 (body "Use cons to build lists.")
 (firsts xs-five-nested)
+(seconds xs-five-nested)
 
 (title "The Third Commandment")
 (body "When building a list, describe the first typical")
@@ -218,3 +219,9 @@
 (fun? tup-two)
 
 (revrel tup-two)
+
+(fullfun? tup-two)
+(one-to-one? tup-two)
+
+(firsts tup-two)
+(seconds tup-two)

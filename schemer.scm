@@ -38,7 +38,13 @@
   (lambda (l)
     (cond
       ((null? l) (quote ()))
-      (else (cons (car (car l)) (firsts (cdr l)) )) )))
+      (else (cons (car (car l)) (firsts (cdr l)))))))
+
+(define seconds
+  (lambda (l)
+    (cond
+      ((null? l) (quote ()))
+      (else (cons (cdr (car l)) (seconds (cdr l)))))))
 
 ; Page 48
 (define insertR
@@ -549,4 +555,5 @@
       (revpair (car rel))
       (revrel (cdr rel)))))))
 
-
+(define fullfun? (lambda (rel) (set? (seconds rel))))
+(define one-to-one? (lambda (rel) (fun? (revrel rel))))
