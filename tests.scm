@@ -232,3 +232,9 @@
 
 (insertLr 'eleventy 'one xs-five)
 (insertRr 'eleventy 'one xs-five)
+
+(insertLrr 'smementy 'one xs-five)
+(subst_r 'smementy 'one xs-five)
+
+(title "The Minth Commandment")
+(body "Abstract common patterns with a new function")

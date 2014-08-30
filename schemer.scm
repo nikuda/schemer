@@ -590,11 +590,19 @@
 (define seqR (lambda (new old l)
   (cons old (cons new l))))
 
-(define insert-g (lambda (test? seq) (lambda (new old l)
+(define insert-g (lambda (seq) (lambda (new old l)
   (cond
     ((null? l) '())
-    ((test? (car l) old) (seq new old (cdr l)))
+    ((eq? (car l) old) (seq new old (cdr l)))
     (else (cons (car l) ((insert-g seq) new old l)))))))
 
-(define insertLr (insert-g eq? seqL))
-(define insertRr (insert-g eq? seqR))
+(define insertLr (insert-g seqL))
+(define insertRr (insert-g seqR))
+
+(define insertLrr (insert-g
+  (lambda (new old l)
+    (cons new (cons old l)))))
+
+(define seqS (lambda (new old l) (cons new l)))
+
+(define subst_r (insert-g seqS))
