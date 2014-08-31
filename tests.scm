@@ -243,3 +243,8 @@
 (value_r '(o+ 4 4))
 (value_r '(o* 4 4))
 (value_r '(o** 4 4))
+
+((multirember_r eq?) 'fish food)
+(multirember-eq? 'fish food)
+(multiremberT (lambda (a) (eq? a 'fish)) food)
+

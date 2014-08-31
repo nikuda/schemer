@@ -618,5 +618,24 @@
     (cond
       ((atom? nexp) nexp)
       (else
-        ((atom-to-function (operator nexp)) (value (1st-sub-exp nexp))
-            (value (2nd-sub-exp nexp)))))))
+        ((atom-to-function (operator nexp))
+          (value_r (1st-sub-exp nexp))
+          (value_r (2nd-sub-exp nexp)))))))
+
+(define multirember_r (lambda (test?) (lambda (a lat)
+  (cond
+    ((null? lat) (quote ()))
+    (else (cond
+        ((test? (car lat) a) ((multirember_r test?) a (cdr lat)))
+        (else (cons (car lat) ((multirember_r test?) a (cdr lat))))))))))
+
+(define multirember-eq? (multirember_r eq?))
+
+(define multiremberT (lambda (test? lat)
+  (cond
+    ((null? lat) (quote ()))
+    (else (cond
+        ((test? (car lat)) (multiremberT test? (cdr lat)))
+        (else (cons (car lat) (multiremberT test? (cdr lat)))))))))
+
+
