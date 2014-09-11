@@ -248,8 +248,11 @@
 (multirember-eq? 'fish food)
 (multiremberT (lambda (a) (eq? a 'fish)) food)
 
-(multirember&co 'food food a-friend)
-(multirember&co 'food food last-friend)
+(multirember&co 'fish food a-friend)
+(multirember&co 'chips food last-friend)
 
 (title "The Tenth Commandment")
 (body "Build functions to collect more than one value at a time")
+
+(multiinsertLR 'salty 'fish 'chips food)
+(multiinsertLR&co 'salty 'fish 'chips food (lambda (lat l r) (= l r)))
