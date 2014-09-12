@@ -264,3 +264,4 @@
 (evens-only*&co '((9 1 2 8) 3 10 ((9 9) 7 6) 2) (lambda (n p s)
   (cons s (cons p n))))
 
+(shift '((a b) (c d)))

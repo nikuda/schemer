@@ -703,3 +703,14 @@
       (evens-only*&co (cdr l) (lambda (newl2 prod2 sum2)
         (col (cons newl newl2) (o* prod prod2) (o+ sum sum2))))))))))
 
+; not recurring on a part of lat
+(define keep-looking (lambda (a sorn lat)
+  (cond
+    ((number? sorn) (keep-looking a (pick sorn lat) lat))
+    (else (eq? sorn a)))))
+
+(define looking (lambda (a lat)
+  (keep-looking a (pick 1 lat) lat)))
+
+(define shift (lambda (tup)
+  (build (first (first tup)) (build (second (first tup)) (second tup)))))
