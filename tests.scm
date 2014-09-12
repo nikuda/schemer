@@ -260,5 +260,7 @@
 (even? 2)
 (even? 3)
 
-(evens-only* '((2 3) (123 12 23 4) 140 4 5 (7)))
+(evens-only* '((9 1 2 8) 3 10 ((9 9) 7 6) 2))
+(evens-only*&co '((9 1 2 8) 3 10 ((9 9) 7 6) 2) (lambda (n p s)
+  (cons s (cons p n))))
 

@@ -689,3 +689,17 @@
         ((even? (car l)) (cons (car l) (evens-only* (cdr l))))
         (else (evens-only* (cdr l)))))
     (else (cons (evens-only* (car l)) (evens-only* (cdr l)))))))
+
+(define evens-only*&co (lambda (l col)
+  (cond
+    ((null? l) (col '() 1 0))
+    ((atom? (car l))
+      (cond
+        ((even? (car l)) (evens-only*&co (cdr l) (lambda (newl prod sum)
+          (col (cons (car l) newl) (o* (car l) prod) sum))))
+        (else (evens-only*&co (cdr l) (lambda (newl prod sum)
+          (col newl prod (o+ (car l) sum)))))))
+    (else (evens-only*&co (car l) (lambda (newl prod sum)
+      (evens-only*&co (cdr l) (lambda (newl2 prod2 sum2)
+        (col (cons newl newl2) (o* prod prod2) (o+ sum sum2))))))))))
+
