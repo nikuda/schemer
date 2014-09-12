@@ -256,3 +256,9 @@
 
 (multiinsertLR 'salty 'fish 'chips food)
 (multiinsertLR&co 'salty 'fish 'chips food (lambda (lat l r) (= l r)))
+
+(even? 2)
+(even? 3)
+
+(evens-only* '((2 3) (123 12 23 4) 140 4 5 (7)))
+
