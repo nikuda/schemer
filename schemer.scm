@@ -712,6 +712,8 @@
 (define looking (lambda (a lat)
   (keep-looking a (pick 1 lat) lat)))
 
+(define eternity (lambda (x) (eternity x)))
+
 (define shift (lambda (tup)
   (build (first (first tup)) (build (second (first tup)) (second tup)))))
 
@@ -754,3 +756,14 @@
     ((zero? m) (A (sub1 n) 1))
     (else (A (sub1 n) (A n (sub1 m)))))))
 
+; the first function that we can describe precisely
+; but cannot define in our language.
+; turing, godel
+
+;(define will-stop? (lambda (f)
+;  (cond
+;    ((o= 0 (f '())) #t)
+;    (else #f))))
+
+;(define last-try (lambda (x)
+;  (and (will-stop? last-try) (eternity x))))

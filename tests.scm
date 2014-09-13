@@ -272,7 +272,27 @@
 (shuffle '(a b))
 
 ; following procedures are non-total
-; (shuffle '((a b) (c d)))
+;(shuffle '((a b) (c d)))
 
-; (C 8721)
-(A 2 2)
+;(C 8721)
+;(A 2 2)
+
+; what is the value of:
+
+;(((lambda (mk-length) (mk-length mk-length))
+;  (lambda (mk-length) (lambda (l)
+;    (cond
+;      ((null? l) 0)
+;      (else (addl ((mk-length eternity) (cdr l)))))))))
+
+; Y comb
+
+;((lambda (le)
+;    ((lambda (mk-length)
+;      (mk-length mk-length)) (lambda (mk-length)
+;        (le (lambda (x)
+;          ((mk-length mk-length) x))))))
+;  (lambda (length) (lambda (l)
+;    (cond
+;      ((null? l) 0)
+;      (else (add1 (length (cdr l))))))))
