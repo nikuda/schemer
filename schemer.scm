@@ -714,3 +714,43 @@
 
 (define shift (lambda (tup)
   (build (first (first tup)) (build (second (first tup)) (second tup)))))
+
+(define align (lambda (tora)
+  (cond
+    ((atom? tora) tora)
+    ((a-pair? (first tora)) (align (shift tora)))
+    (else (build (first tora) (align (second tora)))))))
+
+(define length* (lambda (tora)
+  (cond
+    ((atom? tora) 1)
+    (else (o+ (length* (first tora)) (length* (second tora)))))))
+
+(define weight* (lambda (tora)
+  (cond
+    ((atom? tora) 1)
+    (else (o+
+      (o* 2 (length* (first tora)))
+      (length* (second tora)))))))
+
+; dang, has non-total cases
+(define shuffle (lambda (tora)
+  (cond
+    ((atom? tora) tora)
+    ((a-pair? (first tora)) (shuffle (revpair tora)))
+    (else (build (shuffle (first tora)) (shuffle (second tora)))))))
+
+; lothar collatz
+(define C (lambda (n)
+  (cond
+    ((one? n) 1)
+    ((even? n) (C (o/ n 2)))
+    (else (C (add1 (o* 3 n)))))))
+
+; wilhelm ackerman
+(define A (lambda (n m)
+  (cond
+    ((zero? n) (add1 m))
+    ((zero? m) (A (sub1 n) 1))
+    (else (A (sub1 n) (A n (sub1 m)))))))
+

@@ -265,3 +265,14 @@
   (cons s (cons p n))))
 
 (shift '((a b) (c d)))
+(align '((a b) (c d)))
+(length* '((a b) (c d)))
+(weight* '((a b) (c d)))
+(weight* '(a (c d)))
+(shuffle '(a b))
+
+; following procedures are non-total
+; (shuffle '((a b) (c d)))
+
+; (C 8721)
+(A 2 2)
