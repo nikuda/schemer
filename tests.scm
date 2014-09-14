@@ -184,9 +184,9 @@
 (1st-sub-exp '('one 'two 'three))
 (2nd-sub-exp '('one 'two 'three))
 
-(value '(o+ 4 4))
-(value '(o* 4 4))
-(value '(o** 4 4))
+(value_v1 '(o+ 4 4))
+(value_v1 '(o* 4 4))
+(value_v1 '(o** 4 4))
 
 (title "The Eighth Commandment")
 (body "Use help functions to abstract from representations.")
@@ -240,9 +240,9 @@
 (body "Abstract common patterns with a new function")
 
 ((atom-to-function 'o*) 2 2)
-(value_r '(o+ 4 4))
-(value_r '(o* 4 4))
-(value_r '(o** 4 4))
+(value_v2 '(o+ 4 4))
+(value_v2 '(o* 4 4))
+(value_v2 '(o** 4 4))
 
 ((multirember_r eq?) 'fish food)
 (multirember-eq? 'fish food)
@@ -296,3 +296,17 @@
 ;    (cond
 ;      ((null? l) 0)
 ;      (else (add1 (length (cdr l))))))))
+
+(define xs-entry (new-entry
+  '(one two three) '((couple of things) (other things) (last things))))
+(displayln xs-entry)
+
+(lookup-in-entry 'two xs-entry displayln)
+(lookup-in-entry 'four xs-entry displayln)
+
+(define xs-table (extend-table xs-entry '()))
+
+(value_v2 (car (quote (a b c))))
+(value_v2 (add1 6))
+
+;(meaning (lambda (x) (cons x x)) '(((y z) ((8) 9))))

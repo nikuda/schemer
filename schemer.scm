@@ -447,19 +447,19 @@
   (lambda (aexp)
     (car (cdr (cdr aexp)))))
 
-(define value
+(define value_v1
   (lambda (nexp)
     (cond
       ((atom? nexp) nexp)
       ((eq? (operator nexp) 'o+)
-        (o+ (value (1st-sub-exp nexp))
-            (value (2nd-sub-exp nexp))))
+        (o+ (value_v1 (1st-sub-exp nexp))
+            (value_v1 (2nd-sub-exp nexp))))
       ((eq? (operator nexp) 'o*)
-        (o* (value (1st-sub-exp nexp))
-            (value (2nd-sub-exp nexp))))
+        (o* (value_v1 (1st-sub-exp nexp))
+            (value_v1 (2nd-sub-exp nexp))))
       (else
-        (o* (value (1st-sub-exp nexp))
-            (value (2nd-sub-exp nexp)))))))
+        (o* (value_v1 (1st-sub-exp nexp))
+            (value_v1 (2nd-sub-exp nexp)))))))
 
 ; page 111
 
@@ -613,14 +613,14 @@
     ((eq? x 'o*) o*)
     (else o**))))
 
-(define value_r
+(define value_v2
   (lambda (nexp)
     (cond
       ((atom? nexp) nexp)
       (else
         ((atom-to-function (operator nexp))
-          (value_r (1st-sub-exp nexp))
-          (value_r (2nd-sub-exp nexp)))))))
+          (value_v2 (1st-sub-exp nexp))
+          (value_v2 (2nd-sub-exp nexp)))))))
 
 (define multirember_r (lambda (test?) (lambda (a lat)
   (cond
@@ -767,3 +767,90 @@
 
 ;(define last-try (lambda (x)
 ;  (and (will-stop? last-try) (eternity x))))
+
+; entry is a pair of lists, whose first list is a set
+(define new-entry build)
+
+(define lookup-in-entry (lambda (name entry entry-f)
+  (lookup-in-entry-help name (first entry) (second entry) entry-f)))
+
+(define lookup-in-entry-help (lambda (name keys values entry-f)
+  (cond
+    ((null? keys) (entry-f name))
+    ((eq? (car keys) name) (car values))
+    (else (lookup-in-entry-help name (cdr keys) (cdr values) entry-f)))))
+
+(define extend-table cons)
+
+(define lookup-in-table (lambda (name table table-f)
+  (cond
+    ((null? table) (table-f table))
+    (else (lookup-in-entry name (car table) (lambda (name)
+      (lookup-in-table name (cdr table) table-f)))))))
+
+;*const
+;*quote
+;*identifier
+;*lambda
+;*cond
+;*application
+
+(define text-of second)
+(define table-of first)
+(define formals-of second)
+(define body-of third)
+
+(define *const (lambda (e table)
+  (cond
+    ((number? e) e)
+    ((eq? e #t) #t)
+    ((eq? e #f) #f)
+    (else (build (quote primitive) e)))))
+
+(define *quote (lambda (e table) (text-of e)))
+
+(define initial-table (lambda (name) (car (quote ()))))
+
+(define *identifier (lambda (e table)
+  (lookup-in-table e table initial-table)))
+
+(define *lambda (lambda (e table)
+  (build (quote non-primitive) (cons table (cdr e)))))
+
+(define atom-to-action (lambda (e)
+  (cond
+    ((number? e) *const)
+    ((eq? e #t) *const)
+    ((eq? e #f) *const)
+    ((eq? e (quote cons)) *const)
+    ((eq? e (quote car)) *const)
+    ((eq? e (quote cdr)) *const)
+    ((eq? e (quote null?)) *const)
+    ((eq? e (quote eq?)) *const)
+    ((eq? e (quote atom?)) *const)
+    ((eq? e (quote zero?)) *const)
+    ((eq? e (quote add1)) *const)
+    ((eq? e (quote sub1)) *const)
+    ((eq? e (quote number?)) *const)
+    (else *identifier))))
+
+(define list-to-action (lambda (e)
+  (cond
+    ((atom? (car e)
+      (cond
+        ((eq? (car e) (quote quote)) *quote)
+        ((eq? (car e) (quote lambda)) *lambda)
+        ;((eq? (car e) (quote cond)) *cond)
+        (else *quote))))
+    (else *quote))))
+
+(define expression-to-action (lambda (e)
+  (cond
+    ((atom? e) (atom-to-action e))
+    (else (list-to-action e)))))
+
+(define value (lambda (e)
+  (meaning e (quote ()))))
+
+(define meaning (lambda (e table)
+  ((expression-to-action e) e table)))
