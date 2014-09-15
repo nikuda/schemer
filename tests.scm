@@ -310,3 +310,5 @@
 (value_v2 (add1 6))
 
 ;(meaning (lambda (x) (cons x x)) '(((y z) ((8) 9))))
+
+(apply '(primitive cons) '(6 (a b c)))
